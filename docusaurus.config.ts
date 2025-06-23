@@ -10,11 +10,11 @@ const config: Config = {
   projectName: "واقعیت مجازی",
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
-  i18n: {
-    defaultLocale: "en",
-    locales: ["en"],
-    path: "i18n",
-  },
+  // i18n: {
+  //   defaultLocale: "en",
+  //   locales: ["en"],
+  //   path: "i18n",
+  // },
 
   presets: [
     [
