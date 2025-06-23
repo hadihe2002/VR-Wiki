@@ -1,18 +1,21 @@
 ---
 sidebar_position: 2
+
 title: شروع مسیر یادگیری
 ---
 
 # مشاهده‌ی مسیر‌های یادگیری
--	در لینک [Learning Pathways]( https://learn.unity.com/pathways)، می‌توانید مسیر‌های یادگیری unity را مشاهده کنید.
+
+- باز هم تاکید می‌کنم این داکیومنت صرفا برای یادگیری و توسعه‌ی سریعتر نوشته شده است. بهترین راه استفاده از آموزش‌های موجود در سایت unity برای یادگیری مرحله‌ به مرحله است.
+
+- در لینک [Learning Pathways](https://learn.unity.com/pathways)، می‌توانید مسیر‌های یادگیری unity را مشاهده کنید.
+
+- آموزش [Unity Essentials](https://learn.unity.com/pathway/unity-essentials)، [Junior Programming](https://learn.unity.com/pathway/junior-programmer) و [VR Development](https://learn.unity.com/pathway/vr-development) را می‌توانید در لینک‌های داده شده مشاهده کنید.
 
 ![Unity Website](./img/unity-pathways.png)
 
--	برای شروع کار با unity، پیشنهاد می‌شود دوره‌ی [Unity Essentials]( https://learn.unity.com/pathway/unity-essentials)  را مشاهده کنید.
--	در حال حاضر 6 بخش در این آموزش وجود دارد. در صورت کمبود وقت، پیشنهاد می‌شود حتما دو بخش اول Editor Essentials و 3D Essentials را مشاهده کنید.
+# یادگیری unity با کمک ساخت یک بازی
 
--	در آموزش Editor Essentials، شما نحوه‌ی نصب و راه اندازی unity را یاد می‌گیرید. پیشنهاد می‌شود برای نصب و راه اندازی از این آموزش استفاده کنید تا با آخرین آپدیت‌ها و تغییرات همگام باشید و به ارورها و مشکلات غیرمنتظره برخورد نکنید.
+- این آموزش تمام مفاهیم نرم فزار (به همراه کد نویسی پایه) را با ساخت یک بازی دوبعدی توضیح می‌دهد. [The Unity Tutorial For Complete Beginners](https://www.youtube.com/watch?v=XtQMytORBmM&t=1574s) توصیه می‌کنم این آموزش را حتما مشاهده کنید.
 
--	در 3D Essentials، با میان‌برها و ابزار‌های کاربردی در نرم افزار آشنا می‌شوید و به طور کلی دستتان در استفاده از نرم افزار تندتر می‌شود.
-
-- در فرآیند نصب در صورت نداشتن سرعت بالای اینترنت ممکن است با مشکلاتی رو به رو شوید.
+![The Unity Tutorial For Complete Beginners](./img/unity-create-a-game.png)
