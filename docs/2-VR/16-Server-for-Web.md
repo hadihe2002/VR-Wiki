@@ -1,5 +1,5 @@
 ---
 sidebar_position: 16
 
-title: نمایش فروجی روی وب (Web Server)
+title: نمایش خروجی روی وب (Web Server)
 ---
