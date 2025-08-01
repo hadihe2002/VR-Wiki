@@ -4,53 +4,62 @@ sidebar_position: 15
 title: فارسی نویسی
 ---
 
-# راهنمای رابط کاربری در Unity VR
+# نمایش متن فارسی در Unity
 
-- این آموزش در این [لینک](https://learn.unity.com/pathway/vr-development/unit/events-and-interactions/tutorial/2-4-user-interface?version=2022.3) قرار دارد.
-- توصیه می‌شود تا این آموزش را از داخل سایت Unity به صورت ویدیویی پیش ببرید. راه حل چالش‌های این بخش را می‌توانید در [این کانال یوتیوب](https://www.youtube.com/@garlicsuter) مشاهده کنید.
+## [نصب Package](https://github.com/pnarimani/RTLTMPro)
 
-## اضافه کردن UI فضای جهانی به اتاق
+- برای نمایش متن فارسی در Unity، لازم است از Package RTLTMPro استفاده کنید. براین نصب این Package، به این [آدرس](https://github.com/sorencoder/RTLTMPro/releases) بروید و آخرین نسخه UnityPackage را دانلود کنید. در Unity، به منوی `Assets > Import Package > Custom Package...` بروید و فایل `.unitypackage` دانلود شده را انتخاب کنید. در پنجره Import، تمام فایل‌ها را انتخاب کرده و `Import` کنید.
 
-### ایجاد World Space Canvas
+- نصب از طریق Package manager ممکن است مشکلاتی به وجود بیاورد.
 
-- رابط کاربری در VR باید در فضای سه‌بعدی قرار گیرد تا با محیط هماهنگ باشد. **Canvas** component را روی **World Space** تنظیم کنید تا UI در دنیای بازی قرار گیرد. Event Camera را به XR Camera assign کنید تا تعاملات درست کار کنند. **Canvas Scaler** برای تنظیم اندازه مناسب UI در فضای VR استفاده کنید. Position و Scale را طوری تنظیم کنید که راحت قابل مشاهده و دسترسی باشد. Graphic Raycaster component برای تشخیص تعامل Ray Interactor با UI elements اضافه کنید.-
+## ایجاد فونت فارسی
 
-## ویرایش متن خوشامدگویی
+- حالا لازم است یک فونت فارسی مانند [Vazirmatn](https://github.com/rastikerdar/vazir-font) یا [IRANSans](https://github.com/rastikerdar/iran-sans) یا [Samim](https://github.com/rastikerdar/samim-font) را دانلود کنید و داخل Unity آن را تنظیم کنید. به `Window > TextMeshPro > Font Asset Creator` بروید تا پنجره Font Asset Creator باز شود.
 
-### تنظیم Welcome Text
+1. انتخاب **Atlas Size**: برای فارسی حداقل `512x512` ، برای کیفیت بهتر `1024x1024` و برای متن‌های زیاد یا اندازه‌های بزرگ `2048x2048` پیشنهاد می‌شود.
 
-- متن خوشامدگویی اولین تجربه کاربر از UI شماست. **Text Mesh Pro** برای کیفیت بهتر متن در VR استفاده کنید. Font Size را به اندازه مناسبی تنظیم کنید که از فاصله مناسب قابل خواندن باشد. **Color Contrast** بالا برای خوانایی بهتر در محیط VR انتخاب کنید. Text Alignment و Layout برای ظاهر حرفه‌ای تنظیم کنید. Localization support برای پشتیبانی از زبان‌های مختلف در نظر بگیرید. Animation Effect برای جذاب‌تر کردن ظاهور متن اضافه کنید.
+2. انتخاب **Character Set**: گزینه `Unicode Range` را انتخاب کنید.
 
-## اضافه کردن دکمه OK به پنل
+3. فیلد **Character Sequence**: به پوشه `Assets/RTLTMPro/Ranges` بروید و `ArabicAll.txt` را باز کنید و تمام محتوای فایل را کپی کنید و آن را در فیلد `Character Sequence (Hex)` paste کنید.
 
-### پیاده‌سازی OK Button
+4. **ایجاد Font**: روی دکمه `Generate Font Atlas` کلیک کنید. سپس روی `Save TextMeshPro Font Asset` کلیک کنید و در مکان مناسب Font Atlas را Save کنید.
 
-- دکمه‌ها رابط اصلی تعامل کاربر با UI هستند. **UI Button** component اضافه کرده و آن را برای تعامل با Ray Interactor تنظیم کنید. Button Graphics و Visual State برای Normal، Highlighted و Pressed حالت‌ها طراحی کنید. **OnClick Event** را برای واکنش به فشردن دکمه پیکربندی کنید. Haptic Feedback برای تأیید فشردن دکمه در VR اضافه کنید. Button Size را به اندازه مناسبی تنظیم کنید که با Ray Interactor راحت قابل انتخاب باشد.
+   ![توضیح تصویر](./img/15-Persian-1.png)
 
-![](./img/14-User-Interface-1.avif)
+## استفاده از متن فارسی در صحنه
 
-## حذف پنل خوشامدگویی با دکمه OK
+- پس از ایجاد Font Asset، برای نمایش متن فارسی در صحنه، در Hierarchy کلیک راست کنید و روی `Create > UI >  Text - TextMeshPro - RTLTMP ` کلیک کنید. GameObject تولید شده خودکار دارای Component مخصوص RTL خواهد بود.
 
-### پیاده‌سازی Panel Removal
+- در Inspector، تنظیمات زیر را اعمال کنید:
 
-- دکمه OK باید قابلیت بستن پنل را داشته باشد. **SetActive(false)** method برای مخفی کردن welcome panel استفاده کنید. Animation Transition برای نرم بودن ناپدید شدن پنل اضافه کنید. **Fade Out Effect** برای تجربه visual بهتر پیاده‌سازی کنید. Sound Effect برای تأیید بستن پنل پخش کنید. State Management برای جلوگیری از فعال شدن مجدد panel در همان session ایجاد کنید. Cleanup Logic برای آزاد کردن منابع پس از بستن پنل اضافه کنید.
+1.  **Font Asset**: Font Asset فارسی که در مرحله قبل ساختید را انتخاب کنید.
 
-## ایجاد Canvas تنظیمات مجدد
+2.  **Text**: متن فارسی مورد نظر خود را وارد کنید.
 
-### ساخت Reset UI Canvas
+3.  **Right To Left**: این گزینه باید به صورت خودکار فعال باشد. در غیر این صورت آن را فعال کنید.
 
-- Canvas جداگانه برای عملکردهای reset نیاز است. **Secondary Canvas** برای reset functionality ایجاد کنید که ابتدا غیرفعال باشد. Layout و Design را طوری تنظیم کنید که با welcome panel متمایز باشد. **Reset Button** و **Cancel Button** برای کنترل کامل کاربر اضافه کنید. Warning Message برای اطلاع‌رسانی عواقب reset نمایش دهید. Confirmation Dialog برای جلوگیری از reset تصادفی پیاده‌سازی کنید. Position Adjustment برای قرارگیری در محل مناسب و قابل دسترس.
+4.  **Preserve Numbers**: این گزینه را فعال کنید تا اعداد به درستی نمایش داده شوند.
 
----
+![توضیح تصویر](./img/15-Persian-2.gif)
 
-## نمایش پنل reset با فشردن دکمه ثانویه
+## تنظیمات VR
 
-### فعال‌سازی Reset Panel
+برای استفاده در پروژه‌های VR، تنظیمات اضافی لازم است:
 
-- دکمه ثانویه controller برای دسترسی سریع به reset استفاده می‌شود. **Input Action** برای secondary button press در XR Input System تنظیم کنید. Event Listener برای تشخیص فشردن دکمه و فعال کردن reset panel ایجاد کنید. **Toggle Behavior** برای باز و بسته کردن panel با همان دکمه پیاده‌سازی کنید. Cooldown Timer برای جلوگیری از فعال‌سازی مکرر سریع اضافه کنید. Visual Indicator برای نشان دادن کدام دکمه برای reset استفاده می‌شود ارائه دهید.
+1.  **Canvas تغییر**: Canvas خود را از Screen Space به `World Space` تبدیل کنید.
 
-## بازگشت به موقعیت شروع با فشردن دکمه
+2.  **Event Camera**: فیلد Event Camera را به Main Camera صحنه assign کنید.
 
-### پیاده‌سازی Teleport Reset
+3.  **موقعیت**: Canvas را در موقعیت و اندازه مناسب برای VR قرار دهید.
 
-- قابلیت بازگشت به موقعیت اولیه برای راحتی کاربر ضروری است. **Transform.position** و **Transform.rotation** کاربر را به مقادیر اولیه بازگردانید. Fade Transition برای smooth teleportation بدون motion sickness اضافه کنید. **Reference Point** برای ذخیره موقعیت و جهت اولیه تعریف کنید. Validation Check برای اطمینان از ایمنی موقعیت مقصد انجام دهید. Animation Effect برای نشان دادن teleportation به کاربر ایجاد کنید. State Reset برای بازگردانی تمام object های moved یا grabbed به حالت اولیه.
+4.  **Font Size**: اندازه فونت را بزرگتر از حالت معمولی انتخاب کنید تا در VR خوانایی بهتری داشته باشد.
+
+## نکات مهم
+
+- در صورتی که کاراکتری نمایش داده نمی‌شود، اطمینان حاصل کنید که آن کاراکتر در Character Sequence موجود باشد.
+
+- اگر متن معکوس نمایش داده می‌شود، گزینه Right To Left را بررسی کنید.
+
+- برای پروژه‌های موبایل، Atlas Size کمتر (512x512) انتخاب کنید تا حجم فایل کمتر باشد.
+
+- همیشه پس از تغییر فونت یا تنظیمات، تست کنید که تمام کاراکترها به درستی نمایش داده می‌شوند.
