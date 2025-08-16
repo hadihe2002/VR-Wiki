@@ -1,41 +1,31 @@
-# Website
+# ویکی مستندات XR
 
-This website is built using [Docusaurus](https://docusaurus.io/), a modern static website generator.
+پلتفرم آموزشی جامع برای فناوری‌های واقعیت گسترده (XR) شامل واقعیت مجازی (VR) و واقعیت افزوده (AR).
 
-### Installation
+## 🌐 وب‌سایت زنده
 
-```
-$ yarn
-```
+**[https://vr-wiki.vercel.app/](https://vr-wiki.vercel.app/)**
 
-### Local Development
+## 📚 بخش‌های آموزشی
 
-```
-$ yarn start
-```
+- **شروع کار**: راهنمای جامع برنامه‌نویسی
+- **واقعیت مجازی (VR)**: آموزش Unity و XR
+- **واقعیت افزوده (AR)**: توسعه اپلیکیشن‌های موبایل
 
-This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
+## 🏫 موسسه
 
-### Build
+**دانشگاه صنعتی شریف**  
+دپارتمان مهندسی صنایع  
+آزمایشگاه تحقیقات و توسعه فناوری‌های نوین
 
-```
-$ yarn build
-```
+## 👨‍💻 توسعه‌دهنده
 
-This command generates static content into the `build` directory and can be served using any static contents hosting service.
+**محمد هادی هدایتی**
 
-### Deployment
+## 📝 مجوز
 
-Using SSH:
+این پروژه بخشی از ابتکارات آموزشی دانشگاه صنعتی شریف است.
 
-```
-$ USE_SSH=true yarn deploy
-```
+---
 
-Not using SSH:
-
-```
-$ GIT_USER=<Your GitHub username> yarn deploy
-```
-
-If you are using GitHub pages for hosting, this command is a convenient way to build the website and push to the `gh-pages` branch.
+**© 2024 دانشگاه صنعتی شریف و محمد هادی هدایتی. تمامی حقوق محفوظ است.**
