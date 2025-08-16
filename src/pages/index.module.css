@@ -4,20 +4,203 @@
  */
 
 .heroBanner {
-  padding: 8rem 0;
+  padding: 6rem 0;
   text-align: center;
   position: relative;
   overflow: hidden;
+  background: linear-gradient(135deg, #0d4698 0%, #012e71 50%, #002051 100%);
+  color: white;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
 }
 
 @media screen and (max-width: 996px) {
   .heroBanner {
-    padding: 2rem;
+    padding: 3rem 1rem;
   }
 }
 
-.buttons {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.logoContainer {
+  margin-bottom: 2rem;
+}
+
+.sharifLogo {
+  width: 120px;
+  height: auto;
+  filter: brightness(0) invert(1);
+  transition: transform 0.3s ease;
+}
+
+.sharifLogo:hover {
+  transform: scale(1.1);
+}
+
+.subtitle {
+  font-size: 1.5rem;
+  margin: 1rem 0;
+  font-weight: 400;
+  opacity: 0.95;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.description {
+  font-size: 1.2rem;
+  margin: 0.5rem 0 2rem 0;
+  font-weight: 500;
+  opacity: 0.9;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.docsSection {
+  padding: 4rem 0;
+  background: linear-gradient(180deg, #f8faff 0%, #e1e8ff 100%);
+}
+
+.sectionTitle {
+  text-align: center;
+  margin-bottom: 3rem;
+  color: var(--ifm-color-primary);
+  font-size: 2.5rem;
+  font-weight: 600;
+}
+
+.docsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.docCard {
+  background: var(--ifm-card-background-color);
+  border-radius: 16px;
+  padding: 2rem;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(13, 70, 152, 0.08);
+  transition: all 0.3s ease;
+  border: 2px solid var(--ifm-color-emphasis-300);
+  position: relative;
+  overflow: hidden;
+}
+
+.docCard::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #0d4698, #012e71, #002051);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.docCard:hover::before {
+  opacity: 1;
+}
+
+.docCard:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 30px rgba(13, 70, 152, 0.15);
+  border-color: var(--ifm-color-primary);
+}
+
+.docIcon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.docTitle {
+  color: var(--ifm-color-primary);
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.docDescription {
+  color: var(--ifm-color-emphasis-700);
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+  font-size: 1rem;
+}
+
+.aboutSection {
+  padding: 4rem 0;
+  background: linear-gradient(135deg, #002051 0%, #012e71 50%, #0d4698 100%);
+  color: white;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+.aboutContent {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.aboutTitle {
+  margin-bottom: 2rem;
+  font-size: 2.5rem;
+  font-weight: 600;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.aboutDescription {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  margin-bottom: 1.5rem;
+  opacity: 0.95;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Dark mode specific adjustments */
+[data-theme="dark"] .heroBanner {
+  background: linear-gradient(135deg, #4a9eff 0%, #3a8eff 50%, #2a7eff 100%);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+}
+
+[data-theme="dark"] .aboutSection {
+  background: linear-gradient(135deg, #1a6eff 0%, #2a7eff 50%, #3a8eff 100%);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+}
+
+[data-theme="dark"] .docsSection {
+  background: linear-gradient(180deg, #050a14 0%, #0a1428 100%);
+}
+
+[data-theme="dark"] .subtitle,
+[data-theme="dark"] .description,
+[data-theme="dark"] .aboutTitle,
+[data-theme="dark"] .aboutDescription {
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .docCard {
+  box-shadow: 0 4px 20px rgba(74, 158, 255, 0.2);
+}
+
+[data-theme="dark"] .docCard:hover {
+  box-shadow: 0 8px 30px rgba(74, 158, 255, 0.3);
+}
+
+[data-theme="dark"] .docCard::before {
+  background: linear-gradient(90deg, #4a9eff, #3a8eff, #2a7eff);
+}
+
+@media screen and (max-width: 768px) {
+  .docsGrid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .docCard {
+    padding: 1.5rem;
+  }
+
+  .sectionTitle,
+  .aboutTitle {
+    font-size: 2rem;
+  }
+
+  .subtitle {
+    font-size: 1.3rem;
+  }
 }

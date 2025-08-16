@@ -3,11 +3,11 @@ import type { Config } from "@docusaurus/types";
 import type * as Preset from "@docusaurus/preset-classic";
 
 const config: Config = {
-  title: "واقعیت مجازی",
+  title: "XR",
   url: "https://your-docusaurus-site.example.com",
   baseUrl: "/",
   organizationName: "Hadi",
-  projectName: "واقعیت مجازی",
+  projectName: "XR",
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
   // i18n: {
@@ -32,13 +32,33 @@ const config: Config = {
 
   themeConfig: {
     navbar: {
-      title: "واقعیت مجازی",
+      title: "",
+      logo: {
+        alt: "Sharif University Logo",
+        src: "https://www.sharif.ir/documents/20124/0/logo-fa-IR.png/4d9b72bc-494b-ed5a-d3bb-e7dfd319aec8?t=1609608338755",
+        srcDark:
+          "https://www.sharif.ir/documents/20124/0/logo-fa-IR.png/4d9b72bc-494b-ed5a-d3bb-e7dfd319aec8?t=1609608338755",
+        href: "/",
+      },
       items: [
         {
-          type: "docSidebar",
-          sidebarId: "tutorialSidebar",
-          position: "right",
-          label: "داکیومنت",
+          type: "dropdown",
+          label: " بخش‌های آموزشی",
+          position: "left",
+          items: [
+            {
+              label: "شروع کار",
+              to: "/docs/intro",
+            },
+            {
+              label: "واقعیت مجازی (VR)",
+              to: "/docs/category/vr",
+            },
+            {
+              label: "واقعیت افزوده (AR)",
+              to: "/docs/category/ar",
+            },
+          ],
         },
       ],
     },

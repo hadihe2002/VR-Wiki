@@ -6,27 +6,39 @@
 
 /* You can override the default Infima variables here. */
 :root {
-  --ifm-color-primary: #2e8555;
-  --ifm-color-primary-dark: #29784c;
-  --ifm-color-primary-darker: #277148;
-  --ifm-color-primary-darkest: #205d3b;
-  --ifm-color-primary-light: #33925d;
-  --ifm-color-primary-lighter: #359962;
-  --ifm-color-primary-lightest: #3cad6e;
+  --ifm-color-primary: #0d4698;
+  --ifm-color-primary-dark: #012e71;
+  --ifm-color-primary-darker: #002051;
+  --ifm-color-primary-darkest: #001a3a;
+  --ifm-color-primary-light: #1a5bb3;
+  --ifm-color-primary-lighter: #2a6bc8;
+  --ifm-color-primary-lightest: #3a7bdd;
   --ifm-code-font-size: 95%;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+
+  /* Additional color variables for consistency */
+  --ifm-card-background-color: #ffffff;
+  --ifm-background-color: #f8faff;
+  --ifm-color-emphasis-300: #e1e8ff;
+  --ifm-color-emphasis-700: #2c3e50;
 }
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
 [data-theme="dark"] {
-  --ifm-color-primary: #25c2a0;
-  --ifm-color-primary-dark: #21af90;
-  --ifm-color-primary-darker: #1fa588;
-  --ifm-color-primary-darkest: #1a8870;
-  --ifm-color-primary-light: #29d5b0;
-  --ifm-color-primary-lighter: #32d8b4;
-  --ifm-color-primary-lightest: #4fddbf;
+  --ifm-color-primary: #4a9eff;
+  --ifm-color-primary-dark: #3a8eff;
+  --ifm-color-primary-darker: #2a7eff;
+  --ifm-color-primary-darkest: #1a6eff;
+  --ifm-color-primary-light: #5aaeff;
+  --ifm-color-primary-lighter: #6abeff;
+  --ifm-color-primary-lightest: #7aceff;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+
+  /* Dark mode color overrides */
+  --ifm-card-background-color: #0a1428;
+  --ifm-background-color: #050a14;
+  --ifm-color-emphasis-300: #1a2a4a;
+  --ifm-color-emphasis-700: #e1e8ff;
 }
 
 @font-face {
@@ -36,5 +48,100 @@
 
 body {
   direction: rtl;
-  font-family: Vazirmatn;
+  font-family: Vazirmatn, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    "Roboto", sans-serif;
+  line-height: 1.6;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Navbar logo styling */
+.navbar__logo {
+  margin-right: 1.5rem;
+}
+
+.navbar__logo img {
+  height: 36px;
+  width: auto;
+  filter: none;
+}
+
+[data-theme="dark"] .navbar__logo img {
+  filter: brightness(0) invert(1);
+}
+
+/* Dropdown styling */
+.dropdown__link {
+  font-family: Vazirmatn, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    "Roboto", sans-serif;
+}
+
+/* Improve button styling */
+.button {
+  border-radius: 8px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  border: none;
+  padding: 0.75rem 1.5rem;
+}
+
+.button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(13, 70, 152, 0.3);
+}
+
+.button--primary {
+  background: var(--ifm-color-primary);
+  color: white;
+}
+
+.button--primary:hover {
+  background: var(--ifm-color-primary-dark);
+}
+
+/* Improve heading typography */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 600;
+  line-height: 1.3;
+  margin-bottom: 1rem;
+}
+
+/* Improve link styling */
+a {
+  color: var(--ifm-color-primary);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: var(--ifm-color-primary-dark);
+  text-decoration: underline;
+}
+
+/* Container improvements */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Responsive improvements */
+@media screen and (max-width: 768px) {
+  .container {
+    padding: 0 0.5rem;
+  }
+
+  .navbar__logo {
+    margin-right: 1rem;
+  }
+
+  .navbar__logo img {
+    height: 32px;
+  }
 }
