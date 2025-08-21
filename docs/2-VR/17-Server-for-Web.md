@@ -1,29 +1,37 @@
 ---
 sidebar_position: 17
-
 title: راه‌اندازی Web Server
 ---
 
-- با کمک این تنظیمات، می‌توانید خروجی WebGL خود از نرم افزار unity (WebXR یا WebGL) را در بستر وب در دسترس قرار دهید. تنظیمات را می‌توانید در این [لینک](https://docs.unity3d.com/2022.3/Documentation/Manual/web-server-config-nodejs.html) مشاهده کنید.
-- آسان ترین راه برای این کار راه اندازی وب سرور، استفاده از Express.js در Node.js است. روش‌های Nginx و ... هم قابل انجام است، اما پیچیده تر است.
-- بعد از راه اندازی وب‌سرور، راحت ترین راه استفاده از هم گیت و همروش برای دپلوی سایت روی یک دامنه است.
-- یک نمونه را می‌توانید در [این لینک](https://github.com/hadihe2002/vr-webgl) مشاهده کنید.
+# راه‌اندازی و Deploy وب‌سرور برای WebXR/WebGL
 
-## نصب Node.js
+برای انتشار پروژه‌های **WebXR** و **WebGL** ساخته‌شده در Unity، نیاز به پیکربندی وب‌سرور با تنظیمات خاص دارید.
 
-- از [nodejs.org](https://nodejs.org/) آخرین نسخه LTS را دانلود کنید و نصب کنید (با نصب node.js، به طور خودکار npm هم نصب می‌شود).
+:::tip راه حل توصیه‌شده
+ساده‌ترین روش استفاده از **سرویس ابری همروش** است، اما می‌توانید از هر VPS یا سرویس cloud دیگری نیز استفاده کنید.
+:::
 
-- تست نصب:
+:::info مرجع رسمی Unity
+راهنمای کامل تنظیمات وب‌سرور: [Unity Web Server Configuration](https://docs.unity3d.com/2022.3/Documentation/Manual/web-server-config-nodejs.html)
+:::
 
-```bas
+## پیش‌نیازها
+
+### نصب Node.js
+
+از [nodejs.org](https://nodejs.org/) آخرین نسخه **LTS** را دانلود و نصب کنید:
+
+```bash
+# تست صحت نصب
 node --version
 npm --version
 ```
 
-## ایجاد پروژه Server
+## ایجاد پروژه وب‌سرور
 
-- پروژه را در محلی که خروجی WebGL قرار دارد، ایجاد کنید. خروجی را در پوشه‌ی output قرار دهید.
-- با دستورات زیر، پروژه را ایجاد کنید.
+### ساختار دایرکتوری
+
+پروژه را در محل خروجی WebGL ایجاد کنید:
 
 ```bash
 mkdir unity-webgl-server
@@ -32,54 +40,45 @@ npm init -y
 npm install express
 ```
 
-## ساختار پروژه
+### ساختار نهایی فایل‌ها
 
-- ساختار فایل‌ها باید به شکل زیر باشد:
+├── index.js
+├── package.json
+├── package-lock.json
+├── node_modules/
+├── output/
+├── Build/
+├── index.html
+└── TemplateData/
+└── Dockerfile
 
-```
-index.js*  node_modules/  output/  package.json  package-lock.json
-```
+:::warning نکته مهم
+فایل‌های **Web Build** شده Unity باید حتماً در پوشه `output` کپی شوند.
+:::
 
-- ساختار فولدر خروجی output باید به صورت زیر باشد:
+## پیکربندی Express Server
 
-```
-Build/  index.html  TemplateData/
-```
-
-- **نکته مهم**: فایل‌های Web Build شده Unity باید در پوشه `output` کپی شوند.
-
-## فایل Server
-
-- فایل `index.js` را ایجاد کنید و کد زیر را در آن قرار دهید. توجه کنید که buildPath را طبق مسیر خروجی خود قرار دهید:
+فایل `index.js` را با محتوای زیر ایجاد کنید:
 
 ```javascript
 #!/usr/bin/env node
 
 const path = require("path");
-
 const express = require("express");
 
 // Create express application
-
 const app = express();
 
 // Settings
-
 const hostname = "0.0.0.0";
-
 const port = 8080;
-
 const enableCORS = true;
-
 const enableWasmMultithreading = true;
-
 const buildPath = "./output";
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
-
   res.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
-
   res.setHeader("Access-Control-Allow-Headers", "Content-Type,Authorization");
 
   if (req.method === "OPTIONS") {
@@ -89,9 +88,7 @@ app.use((req, res, next) => {
   var path = req.url;
 
   // Provide COOP, COEP and CORP headers for SharedArrayBuffer
-
   // multithreading: https://web.dev/coop-coep/
-
   if (
     enableWasmMultithreading &&
     (path == "/" ||
@@ -100,28 +97,23 @@ app.use((req, res, next) => {
       path.includes(".htm"))
   ) {
     res.set("Cross-Origin-Opener-Policy", "same-origin");
-
     res.set("Cross-Origin-Embedder-Policy", "require-corp");
-
     res.set("Cross-Origin-Resource-Policy", "cross-origin");
   }
 
   // Set CORS headers
-
   if (enableCORS) {
     res.set("Access-Control-Allow-Origin", "*");
   }
 
   // Set content encoding depending on compression
-
   if (path.endsWith(".br")) {
     res.set("Content-Encoding", "br");
   } else if (path.endsWith(".gz")) {
     res.set("Content-Encoding", "gzip");
   }
 
-  // Explicitly set content type. Files can have wrong content type if build uses compression.
-
+  // Explicitly set content type
   if (path.includes(".wasm")) {
     res.set("Content-Type", "application/wasm");
   } else if (path.includes(".js")) {
@@ -137,11 +129,6 @@ app.use((req, res, next) => {
   }
 
   // Ignore cache-control: no-cache
-
-  // when if-modified-since or if-none-match is set
-
-  // because Unity Loader will cache and revalidate manually
-
   if (
     req.headers["cache-control"] == "no-cache" &&
     (req.headers["if-modified-since"] || req.headers["if-none-match"])
@@ -155,7 +142,7 @@ app.use((req, res, next) => {
 app.use("/webgl", express.static(buildPath, { immutable: true }));
 
 const server = app.listen(port, hostname, () => {
-  console.log(`serve at http://${hostname}:${port}`);
+  console.log(`Server running at http://${hostname}:${port}`);
 });
 
 server.addListener("error", (error) => {
@@ -164,19 +151,23 @@ server.addListener("error", (error) => {
 
 server.addListener("close", () => {
   console.log("Server stopped.");
-
   process.exit();
 });
 ```
 
-- **سپس با دستور `node ./index.js` می‌توانید برنامه را اجرا کنید و در مسیر /webgl می‌توانید خروجی را ببینید.**
+### اجرای محلی سرور
 
-## دپلوی در همروش
+```bash
+node ./index.js
+```
 
-- برای دپلوی، لازم است در [همروش](https://console.hamravesh.com) اکانت ایجاد کنید. سپس با اکانت همروش خود در هم گیت لاگین کنید.
-- سپس مانند Github، این پروژه را با دستورات `Git` روی همگیت در یک Repository قرار دهید. بعد از انجام تنظیمات، تغییرات و فایل‌ها را روی برنچ مستر Push کنید.
-- بعد از آن، لازم است یک Dockerfile در کنار فایل `index.js` ایجاد کنید تا همروش از طریق این فایل، پروژه‌ی شما را ایجاد کند.
-- فایل `Dockerfile` ایجاد کنید:
+سپس در مرورگر به آدرس `/webgl` مراجعه کنید.
+
+## Deploy با همروش (توصیه‌شده)
+
+### مرحله ۱: ایجاد Dockerfile
+
+فایل `Dockerfile` را در کنار `index.js` ایجاد کنید:
 
 ```dockerfile
 FROM node:18-alpine
@@ -194,8 +185,67 @@ EXPOSE 8080
 CMD ["node", "index.js"]
 ```
 
-- دوباره این فایل را نیز در برنچ خود Push کنید. در کنسول همروش خود، یک اپ به کمک **منبع گیت** ایجاد کنید. Repository جدیدی که ایجاد کرده اید را انتخاب کنید.
-- حتما **Port سرویس** را `8080` قرار دهید. روی ایجاد اپلیکیشن کلیک کنید.
-- صبر کنید تا اپ شما ایجاد شود. سپس از داخل تنظیمات **آدرس دامنه** در اپلیکیشن خود، یک دامنه انتخاب کنید و روی ذخیره‌ی تغییرات کلیک کنید.
-- با کلیک روی مشاهده‌ی اپ می‌توانید وبسایت خود را مشاهده کنید!
-  ![توضیح تصویر](./img/17-Server-for-Web.png)
+### مرحله ۲: Git Repository
+
+1. در [کنسول همروش](https://console.hamravesh.com) اکانت ایجاد کنید
+2. در **همگیت** لاگین کنید
+3. Repository جدید ایجاد کنید:
+
+```bash
+git init
+git add .
+git commit -m "Initial commit"
+git remote add origin [YOUR-HAMGIT-REPO-URL]
+git push -u origin master
+```
+
+### مرحله ۳: ایجاد اپلیکیشن
+
+1. در کنسول همروش، اپ جدید **از منبع گیت** ایجاد کنید
+2. Repository همگیت را انتخاب کنید
+3. **Port سرویس** را `8080` تنظیم کنید
+4. اپلیکیشن را ایجاد کنید
+
+### مرحله ۴: تنظیم دامنه
+
+1. از تنظیمات اپ، **آدرس دامنه** انتخاب کنید
+2. تغییرات را ذخیره کنید
+3. از **مشاهده اپ** وبسایت خود را ببینید
+
+![تنظیمات Deploy در همروش](./img/17-Server-for-Web.png)
+
+## Deploy بر روی VPS/Cloud دیگر
+
+### روش‌های جایگزین
+
+- **DigitalOcean**: App Platform یا Droplet
+- **Heroku**: با buildpack Node.js
+- **AWS**: EC2 یا Elastic Beanstalk
+- **Google Cloud**: App Engine یا Compute Engine
+- **Vercel**: پشتیبانی مستقیم از Node.js
+
+### نمونه تنظیمات Nginx (اختیاری)
+
+برای سرورهای با Nginx:
+
+```nginx
+server {
+    listen 80;
+    server_name your-domain.com;
+
+    location /webgl {
+        proxy_pass http://localhost:8080/webgl;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+
+        # WebXR headers
+        add_header Cross-Origin-Opener-Policy same-origin;
+        add_header Cross-Origin-Embedder-Policy require-corp;
+        add_header Cross-Origin-Resource-Policy cross-origin;
+    }
+}
+```
+
+:::info نمونه کامل
+نمونه پیاده‌سازی کامل: [VR WebGL Server Repository](https://github.com/hadihe2002/vr-webgl)
+:::

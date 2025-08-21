@@ -1,157 +1,192 @@
 ---
 sidebar_position: 16
-
 title: خروجی گرفتن (Build)
 ---
 
-- راهنمای کامل را می‌توان [در این لینک](https://learn.unity.com/pathway/vr-development/unit/ergonomics-and-optimization/tutorial/3-4-building-and-sharing?version=2022.3) مشاهده کنید.
+# راهنمای جامع Build و Distribution در Unity VR
 
-## تنظیمات OpenXR
+ساخت و توزیع پروژه‌های **واقعیت مجازی** نیازمند تنظیمات دقیق برای پلتفرم‌های مختلف و بهینه‌سازی‌های خاص VR است.
 
-- `Edit > Project Settings > XR Plug-in Management > OpenXR` بروید.
+:::info مرجع رسمی
+راهنمای کامل Unity برای Build و اشتراک‌گذاری: [Building and Sharing VR Projects](https://learn.unity.com/pathway/vr-development/unit/ergonomics-and-optimization/tutorial/3-4-building-and-sharing?version=2022.3)
+:::
 
-  - **Interaction Profiles**: فقط پروفایل‌های مربوط به هدست خود را فعال کنید:
+## تنظیمات بنیادی OpenXR
 
-  - **Quest**: Oculus Touch Controller Profile
+### پیکربندی XR Plugin Management
 
-  - **HTC Vive**: HTC Vive Controller Profile
+برای دسترسی به تنظیمات OpenXR:
+**Edit > Project Settings > XR Plug-in Management > OpenXR**
 
-  - **Valve Index**: Valve Index Controller Profile
+#### **Interaction Profiles**
 
-- **Mock Runtime**: حتماً غیرفعال باشد.
+تنها پروفایل‌های مربوط به هدست هدف را فعال کنید:
 
-- **XR Device Simulator**: حتما غیرفعال کنید.
+| هدست                | پروفایل مورد نیاز               |
+| ------------------- | ------------------------------- |
+| **Meta Quest 2/3**  | Oculus Touch Controller Profile |
+| **HTC Vive Series** | HTC Vive Controller Profile     |
+| **Valve Index**     | Valve Index Controller Profile  |
+| **Pico Series**     | Pico Controller Profile         |
 
-## تنظیمات Player Setting
+#### **تنظیمات حیاتی**
 
-- `Player Settings` را باز کنید:
+- ✅ **Mock Runtime**: حتماً **غیرفعال** باشد
+- ✅ **XR Device Simulator**: برای build نهایی **غیرفعال** کنید
 
-  - **Product Name**: نام نمایشی اپلیکیشن
+:::warning هشدار مهم
+فعال بودن Mock Runtime و XR Device Simulator در build نهایی باعث عدم عملکرد صحیح روی هدست واقعی خواهد شد.
+:::
 
-  - **Company Name**: نام شرکت/سازنده
+## تنظیمات Player Settings
 
-  - **Version**: شماره نسخه (1.0.0)
+### اطلاعات پروژه
 
-  - **Bundle Identifier** (Android): com.companyname.productname
+**Player Settings** را از طریق **Edit > Project Settings > Player** باز کنید:
 
-  - **Default Icon**: آیکون 512x512 اپلیکیشن
+✓ Product Name: نام نمایشی اپلیکیشن
+✓ Company Name: نام شرکت/سازنده  
+✓ Version: شماره نسخه (مثال: 1.0.0)
+✓ Default Icon: آیکون 512×512 پیکسل
 
-#### تنظیمات خاص Android
+### پیکربندی Android (Quest/Pico)
 
-- در `Player Settings > Android`:
+در تب **Android Settings**:
 
-      - **Configuration**: Release (برای انتشار)
+| تنظیم                    | مقدار توصیه‌شده             |
+| ------------------------ | --------------------------- |
+| **Configuration**        | Release                     |
+| **Scripting Backend**    | IL2CPP                      |
+| **Target Architectures** | ✅ ARM64 فقط                |
+| **Minimum API Level**    | API Level 29 (Android 10)   |
+| **Target API Level**     | Automatic (Highest)         |
+| **Bundle Identifier**    | com.companyname.productname |
 
-      - **Scripting Backend**: IL2CPP
+### پیکربندی Windows (PC VR)
 
-      - **Target Architectures**: فقط ARM64 ✓
+در تب **PC, Mac & Linux Standalone**:
 
-      - **Minimum API Level**: API Level 29 (Android 10)
+Architecture: x86_64
+Configuration: Master  
+Scripting Backend: Mono
+API Compatibility: .NET Framework
 
-      - **Target API Level**: Automatic (Highest Installed)
+### پیکربندی WebGL (Browser VR)
 
-      - **Install Location**: Automatic
+در تب **WebGL Settings**:
 
-#### تنظیمات خاص Windows
+| تنظیم                  | مقدار           |
+| ---------------------- | --------------- |
+| **Memory Size**        | 2048 MB (حداقل) |
+| **Compression Format** | Gzip (پیش‌فرض)  |
+| **Exception Support**  | None            |
+| **Code Optimization**  | Speed           |
+| **Managed Stripping**  | Medium          |
 
-- در `Player Settings > PC, Mac & Linux Standalone`:
+## تنظیمات Quality برای پلتفرم‌ها
 
-      - **Architecture**: x86_64
+**Edit > Project Settings > Quality** را باز کنید:
 
-      - **Configuration**: Master
+### Android/Quest Optimization
 
-      - **Scripting Backend**: Mono
+Quality Level: Medium/Low
+Texture Quality: Half Res
+Anti Aliasing: 2x Multi Sampling
+Shadow Resolution: Medium Shadows
 
-      - **Api Compatibility Level**: .NET Framework
+### PC VR Settings
 
-#### تنظیمات WebGL خاص
+Quality Level: High/Ultra
+Texture Quality: Full Res  
+Anti Aliasing: 4x Multi Sampling
+Shadow Resolution: High Shadows
 
-- در `Player Settings > WebGL`:
+### WebGL Performance
 
-      - **Compression Format**: پیش‌فرض نگه دارید (Gzip)
+Quality Level: Low/Medium
+Texture Quality: Half Res
+Anti Aliasing: Disabled یا 2x
+Shadow Resolution: Disable Shadows
 
-      - **Memory Size**: 2048 MB (حداقل برای VR)
+![Build Settings Configuration](./img/16-Build-2.png)
 
-      - **Exception Support**: None (برای بهینه‌سازی)
+## نصب و پیکربندی WebXR
 
-      - **Code Optimization**: Speed
+### نصب WebXR Export Package
 
-      - **Managed Stripping Level**: Medium
+برای اجرای VR در مرورگر، باید **WebXR Export** را نصب کنید:
 
-      - **WebGL Template**: WebXR2020 (پس از نصب WebXR)
+#### مراحل نصب:
 
-## تنظیمات Quality Settings
+1. **Edit > Project Settings > Package Manager** باز کنید
+2. **Scoped Registry** جدید اضافه کنید:
 
-- `Edit > Project Settings > Quality` بروید:
+- Name: OpenUPM
+- URL: https://package.openupm.com
+- Scope(s): com.de-panther
 
-1. **Android/Quest**:
+3. **Window > Package Manager** باز کنید
+4. **Packages: My Registries** انتخاب کنید
+5. **WebXR Export** را پیدا کرده و Install کنید
 
-   - سطح کیفیت **Medium** یا **Low**
+#### تنظیم WebGL Template:
 
-   - **Texture Quality**: Half Res
+- **Window > WebXR > Copy WebGLTemplates** را اجرا کنید
+- در **Player Settings > WebGL**: Template را **WebXR2020** تنظیم کنید
 
-   - **Anti Aliasing**: 2x Multi Sampling
+:::tip نکته WebXR
+برای تست بدون هدست، می‌توانید Mock Runtime و XR Device Simulator را فعال نگه دارید و با موس/کیبورد صحنه را کنترل کنید.
+:::
 
-2. **PC VR**:
+:::warning پیش‌نیاز WebXR برای Chrome
+برای اجرای WebXR در مرورگر Chrome، باید **Chrome Canary** یا **Chrome Beta** را دانلود کنید و **WebXR Device API** را در experimental features فعال کنید. مرورگر معمولی Chrome این قابلیت را به‌طور پیش‌فرض پشتیبانی نمی‌کند.
+:::
 
-   - سطح کیفیت **High** یا **Ultra**
+## فرآیند Build
 
-   - **Texture Quality**: Full Res
+### انتخاب Platform
 
-   - **Anti Aliasing**: 4x Multi Sampling
+**File > Build Settings** باز کنید و پلتفرم مناسب را انتخاب کنید:
 
-3. **WebGL**:
+| پلتفرم      | کاربرد                         |
+| ----------- | ------------------------------ |
+| **Android** | Quest 2/3, Pico, VIVE XR Elite |
+| **Windows** | PC VR (Rift, Vive, Index, WMR) |
+| **WebGL**   | مرورگر با پشتیبانی WebXR       |
 
-   - سطح کیفیت **Low** یا **Medium**
+### Switch Platform
 
-   - **Texture Quality**: Half Res
+اگر پلتفرم فعلی متفاوت است:
 
-   - **Anti Aliasing**: Disabled یا 2x
+1. **Switch Platform** کلیک کنید
+2. منتظر re-import کامل assets بمانید
+3. تنظیمات مخصوص پلتفرم را اعمال کنید
 
-![توضیح تصویر](./img/16-Build-2.png)
+### تنظیمات نهایی Build
 
-## نصب WebXR Export Package
+- ✓ Development Build: فقط برای debug
+- ✓ Compression Method: بر اساس پلتفرم
+- ✓ Architecture: مطابق تنظیمات Player
 
-- این Package برای اجرای برنامه در بستر web استفاده می‌شود. برای اینکه بخواهید با هدست در بستر وب برنامه را اجرا کنید، باید WebXR را نصب کنید و خروجی را به صورت WebGL بگیرید.
+![Build Platform Selection](./img/16-Build-1.png)
 
-- در صورتی که بخواهید می‌توانید تنظیمات XR Device Simulator و Mock Runtime را نگه دارید و بدون WebXR، خروجی WebGL بگیرید و در بستر Web به کمک موس و کیبورد در صحنه حرکت کنید.
+:::note یادداشت مهم
+همواره build تست را روی دستگاه هدف انجام دهید. تنظیمات Editor با عملکرد واقعی متفاوت است.
+:::
 
-- تنظیمات Server در بخش بعدی توضیح داده خواهد شد.
+## بهینه‌سازی Build Size
 
-#### روش نصب
+### کاهش حجم Assets
 
-- روش نصب را در [این لینک](https://github.com/De-Panther/unity-webxr-export/blob/master/Packages/webxr/README.md) می‌توانید مشاهده کنید.
+- **Texture Compression**: فعال کنید
+- **Audio Compression**: MP3/Vorbis استفاده کنید
+- **Unused Assets**: حذف کنید
+- **Code Stripping**: Medium/High تنظیم کنید
 
-  1.  `Edit > Project Settings > Package Manager` بروید.
+### تنظیمات پیشرفته
 
-  2.  **Scoped Registry** جدید اضافه کنید:
-
-      - Name: OpenUPM
-
-      - URL: https://package.openupm.com
-
-      - Scope(s): com.de-panther
-
-  3.  `Window > Package Manager` باز کنید
-
-  4.  **Packages: My Registries** را انتخاب کنید
-
-  5.  **WebXR Export** را پیدا کرده و `Install` کنید
-
-  6.  اطمینان حاصل کنید که **WebXR Export** در `Project Settings > XR Plug-in Management > WebGL > Plug-in Providers` فعال باشد. همچنین WebGLTemplates را از طریق `Window > WebXR > Copy WebGLTemplates` کپی کنید.
-
-## بیلد گرفتن
-
-- از `ّFile > Build` را انتخاب کنید. در لیست **Platform**، پلتفرم هدف را انتخاب کنید:
-
-  - **Android**: Quest 2/3، Pico، VIVE XR Elite
-
-  - **Windows**: PC VR (Rift، Vive، Index، WMR)
-
-  - **WebGL**: برای مرورگر با WebXR
-
-- در صورتی که می‌خواهید برای platform غیر از windows بیلد بگیرید، `Switch Platform` کلیک کنید و منتظر import مجدد asset ها بمانید.
-
-- سپس تنظیمات کیفیت گزینه‌ی build مانند تنظیمات Compression و Architecture را انجام دهید و روی گزینه‌ی build کلیک کنید.
-
-  ![توضیح تصویر](./img/16-Build-1.png)
+```csharp
+// در PlayerSettings از کد:
+PlayerSettings.stripUnusedMeshComponents = true;
+PlayerSettings.stripEngineCode = true;
+```

@@ -4,38 +4,82 @@ sidebar_position: 1
 title: منابع
 ---
 
-# منابع
+# مجموعه منابع و ابزارهای توسعه
 
-### دانلود آبجکت‌های آماده:
+## منابع مدل‌سازی سه‌بعدی
 
-- https://sketchfab.com/3d-models: مدل‌های سه‌بعدی آماده. برای استفاده از برخی مدل‌ها نیازمند package gLTf هستید که در ادامه توضیح داده خواهد شد.
-- https://www.bimobject.com/en: برای استفاده از مدل‌ها نیاز به نرم‌افزارهای سه بعدی مثل Revit و Blender خواهید داشت.
+### پلتفرم‌های دانلود آبجکت‌های آماده
 
----
+#### [Sketchfab - مدل‌های سه‌بعدی](https://sketchfab.com/3d-models)
 
-### دانلود texture های رایگان:
+- **توضیح**: بزرگترین پلتفرم آنلاین مدل‌های سه‌بعدی با کیفیت بالا
+- **فرمت‌های پشتیبانی شده**: FBX, OBJ, glTF/GLB
+- **نکته فنی**: برای استفاده از برخی مدل‌های glTF در Unity، نصب **Package glTF** ضروری است
 
-- https://texturelabs.org/
-- https://ambientcg.com/
-- https://polyhaven.com/
-- https://www.poliigon.com/textures/free
+:::info پیش‌نیاز فنی
+برای import مدل‌های glTF/GLB در Unity، حتماً از Unity Package Manager، بسته **glTF Runtime Importer** را نصب نمایید.
+:::
 
----
+#### [BIMobject - مدل‌های معماری](https://www.bimobject.com/en)
 
-### نرم افزار Sweet Home 3D:
+- **کاربرد**: مدل‌های تخصصی معماری و ساختمان
+- **پیش‌نیاز**: نیازمند نرم‌افزارهای تخصصی مانند:
+  - **Autodesk Revit** (برای مدل‌های BIM)
+  - **Blender** (برای تبدیل فرمت)
 
-- https://apps.microsoft.com/detail/9nblggh2smtq
+## منابع بافت و Texture
 
----
+### پلتفرم‌های رایگان بافت
 
-### چنل‌های یوتیوب:
+| پلتفرم                                                          | ویژگی‌های کلیدی                 | نوع بافت‌ها             |
+| --------------------------------------------------------------- | ------------------------------- | ----------------------- |
+| [Texture Labs](https://texturelabs.org/)                        | بافت‌های تکراری (Seamless)      | عمومی                   |
+| [AmbientCG](https://ambientcg.com/)                             | بافت‌های PBR با کیفیت بالا      | متریال‌های واقع‌گرایانه |
+| [Poly Haven](https://polyhaven.com/)                            | HDR و بافت‌های حرفه‌ای          | محیط‌های نورپردازی      |
+| [Poliigon - بخش رایگان](https://www.poliigon.com/textures/free) | بافت‌های تجاری با کیفیت استودیو | متریال‌های پیشرفته      |
 
-- https://www.youtube.com/@GMTK/videos: آموزش‌های پروژه محور
-- https://www.youtube.com/@garlicsuter: راه‌حل چالش‌های آخر هر بخش، در آموزش واقعیت مجازی unity
-- https://www.youtube.com/@VRwithAndrew: آموزش‌های تخصصی و شبیه‌سازی با واقعیت مجازی
+:::tip استفاده بهینه از بافت‌ها
+برای بهترین عملکرد در VR، بافت‌های با رزولوشن **1024x1024** یا **2048x2048** استفاده کنید و از فرمت‌های فشرده مانند **DXT** استفاده نمایید.
+:::
 
----
+## ابزارهای طراحی و شبیه‌سازی
 
-### ورودی‌های کنترلر HTC Vive Pro 2:
+### Sweet Home 3D - طراحی داخلی
 
-- https://docs.unity3d.com/Packages/com.unity.xr.openxr@1.15/manual/features/htcvivecontrollerprofile.html
+**[دانلود از Microsoft Store](https://apps.microsoft.com/detail/9nblggh2smtq)**
+
+- **کاربرد**: طراحی سریع layout داخلی برای محیط‌های VR
+- **مزایا**: رابط کاربری ساده، export به فرمت‌های متداول
+- **توصیه**: مناسب برای پروتوتایپ‌سازی سریع فضاهای داخلی
+
+## منابع آموزشی تخصصی
+
+### کانال‌های یوتیوب متخصص
+
+#### [Game Maker's Toolkit (GMTK)](https://www.youtube.com/@GMTK/videos)
+
+- **تخصص**: Game Design و آموزش‌های پروژه‌محور
+- **مناسب برای**: درک اصول طراحی تعامل در VR
+- **زبان**: انگلیسی
+
+#### [GarlicSuter](https://www.youtube.com/@garlicsuter)
+
+- **تخصص**: حل چالش‌های عملی در آموزش‌های Unity VR
+- **محتوا**: راه‌حل‌های گام به گام مشکلات رایج
+- **زبان**: انگلیسی
+
+#### [VR with Andrew](https://www.youtube.com/@VRwithAndrew)
+
+- **تخصص**: آموزش‌های پیشرفته واقعیت مجازی
+- **محتوا**: شبیه‌سازی‌های تخصصی و کاربردهای صنعتی
+- **زبان**: انگلیسی
+
+## مستندات سخت‌افزار
+
+### پروفایل کنترلرهای HTC Vive Pro 2
+
+**[مستندات رسمی Unity XR](https://docs.unity3d.com/Packages/com.unity.xr.openxr@1.15/manual/features/htcvivecontrollerprofile.html)**
+
+- **شامل**: نقشه کامل ورودی‌های (Input Map) کنترلرها
+- **پشتیبانی**: OpenXR Plugin
+- **کاربرد**: پیاده‌سازی کنترل‌های سفارشی

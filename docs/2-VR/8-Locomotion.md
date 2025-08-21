@@ -4,44 +4,235 @@ sidebar_position: 8
 title: جا به جایی (Locomotion)
 ---
 
-# راهنمای VR Locomotion در Unity
+# راهنمای جامع VR Locomotion در Unity
 
-- این آموزش را می‌توانید در [این لینک](https://learn.unity.com/pathway/vr-development/unit/vr-basics/tutorial/vr-locomotion?version=2022.3) مشاهده کنید.
-- توصیه می‌شود تا این آموزش را از داخل سایت Unity به صورت ویدیویی پیش ببرید. راه حل چالش‌های این بخش را می‌توانید در [این کانال یوتیوب](https://www.youtube.com/@garlicsuter) مشاهده کنید.
+Locomotion یکی از مهم‌ترین اجزای تجربه VR است که به کاربران امکان حرکت در فضای مجازی را می‌دهد، بدون اینکه نیاز به حرکت فیزیکی در دنیای واقعی باشد.
 
-## پر کردن اتاق با مبلمان
+:::info منابع یادگیری
 
-- در این مرحله، محیط VR خود را با اشیاء مختلف پر می‌کنیم تا فضای واقعی‌تری ایجاد شود. مبلمان و اشیاء مختلف کمک می‌کنند تا کاربر بتواند spatial awareness بهتری داشته باشد و locomotion system را بهتر تست کند.
-- اشیاء مختلف مثل میز، صندلی، کتابخانه و... را در صحنه قرار دهید. مطمئن شوید که collider های مناسبی برای این اشیاء تنظیم شده تا با locomotion system تداخل نداشته باشند.
+- **آموزش Unity**: [VR Locomotion Tutorial](https://learn.unity.com/pathway/vr-development/unit/vr-basics/tutorial/vr-locomotion?version=2022.3)
+- **راه‌حل چالش‌ها**: [کانال YouTube](https://www.youtube.com/@garlicsuter)
+  :::
 
-## اضافه کردن قابلیت چرخش گام‌به‌گام
+## بخش ۱: آماده‌سازی محیط
 
-چرخش Snap turning روشی برای چرخش در VR است که motion sickness را کاهش می‌دهد. برای پیاده‌سازی این قابلیت، **Snap Turn Provider** را به Locomotion System اضافه کنید. در تنظیمات این component، Turn Amount را روی 30 یا 45 درجه تنظیم کنید. سپس در Input Action Asset، action مربوط به چرخش را به Right Hand Controller bind کنید. معمولاً از Primary 2D Axis (thumbstick یا trackpad) برای این منظور استفاده می‌شود. Debounce Time را تنظیم کنید تا بین هر چرخش فاصله زمانی مناسبی وجود داشته باشد.
+### پر کردن اتاق با مبلمان
 
-## ایجاد منطقه تله‌پورت روی فرش
+#### اهداف محیطی:
 
-Teleportation Area نواحی هستند که کاربر می‌تواند به هر نقطه‌ای از آن‌ها تله‌پورت کند. یک فرش یا سطح مناسب انتخاب کنید و **Teleportation Area** component را به آن اضافه کنید. مطمئن شوید که این object دارای Collider است و isTrigger فعال است. در layer مناسبی قرار دهید که توسط Ray Interactor شناسایی شود. Match Orientation را تنظیم کنید تا مشخص کنید آیا جهت کاربر هنگام تله‌پورت تغییر کند یا خیر. Visual feedback مناسبی برای نشان دادن قابلیت تله‌پورت اضافه کنید.
+- **ایجاد فضای واقعی‌تر** با اشیاء متنوع
+- **بهبود Spatial Awareness** کاربر
+- **تست کامل Locomotion System**
 
-## ایجاد نقاط ثابت تله‌پورت روی پادری‌ها
+#### عناصر پیشنهادی:
 
-برخلاف Teleportation Area که اجازه تله‌پورت به هر نقطه را می‌دهد، **Teleportation Anchor** نقاط ثابت و از پیش تعریف شده برای تله‌پورت هستند. پادری‌ها یا نقاط خاصی در صحنه انتخاب کنید و Teleportation Anchor component را اضافه کنید. موقعیت دقیق تله‌پورت را با Teleport Anchor Transform تنظیم کنید. Match Orientation و Match Directional Input را بر اساس نیاز پروژه تنظیم کنید. این روش کنترل بیشتری روی مکان‌های قابل دسترس به کاربر می‌دهد.
+| نوع شیء         | تعداد   | نقش            |
+| --------------- | ------- | -------------- |
+| **میز و صندلی** | 2-3 ست  | نقاط مرجع      |
+| **کتابخانه**    | 1-2 عدد | مانع عمودی     |
+| **فرش**         | چندین   | منطقه تله‌پورت |
+| **لامپ/تابلو**  | 3-4 عدد | جزئیات محیطی   |
 
-## سفارشی‌سازی نشانگرهای تله‌پورت
+:::caution تنظیمات Collider
+مطمئن شوید تمام اشیاء دارای Collider مناسب هستند تا با Locomotion System تداخل ایجاد نکنند.
+:::
 
-Reticle ها visual feedback هایی هستند که نشان می‌دهند کاربر کجا تله‌پورت خواهد شد. در **XR Ray Interactor** تنظیمات Reticle را سفارشی کنید. Valid Reticle برای نواحی قابل تله‌پورت و Invalid Reticle برای نواحی غیرقابل تله‌پورت تنظیم کنید. می‌توانید از Prefab های مختلف، Material های متفاوت یا حتی انیمیشن برای reticle ها استفاده کنید. Ray Origin و Ray End Point را نیز تنظیم کنید تا ray مناسبی نمایش داده شود. Line Material و Line Width را برای بهبود visual feedback تنظیم کنید.
+## بخش ۲: چرخش گام‌به‌گام (Snap Turning)
 
-## جمع‌بندی
+### مزایای Snap Turning
 
-در این آموزش locomotion system کاملی برای VR پیاده‌سازی کردیم که شامل موارد زیر بود:
+- **کاهش Motion Sickness**
+- **کنترل دقیق‌تر جهت**
+- **سازگاری با انواع کنترلرها**
 
-- **Room Setup**: پر کردن محیط با مبلمان برای تست بهتر
+### پیاده‌سازی Snap Turn Provider
 
-- **Snap Turning**: چرخش گام‌به‌گام برای کاهش motion sickness
+#### مراحل تنظیم:
 
-- **Teleportation Areas**: نواحی قابل تله‌پورت با انعطاف‌پذیری بالا
+1. **اضافه کردن Component**:
+   XR Origin > Locomotion System > Add Component > Snap Turn Provider
 
-- **Teleportation Anchors**: نقاط ثابت تله‌پورت برای کنترل دقیق‌تر
+   ```
 
-- **Visual Feedback**: سفارشی‌سازی reticle ها برای تجربه بهتر
+   ```
 
-این سیستم ترکیب مناسبی از راحتی و قابلیت کنترل برای کاربران VR فراهم می‌کند.
+2. **تنظیمات کلیدی**:
+
+| پارامتر                | مقدار توصیه‌شده | توضیح             |
+| ---------------------- | --------------- | ----------------- |
+| **Turn Amount**        | 30-45°          | زاویه هر چرخش     |
+| **Debounce Time**      | 0.5s            | فاصله بین چرخش‌ها |
+| **Enable Turn Around** | ✅              | چرخش 180°         |
+
+### تنظیم Input Actions
+
+در **Input Action Asset**:
+
+Right Hand Controller > Primary 2D Axis → Snap Turn
+
+:::tip بهینه‌سازی
+برای تجربه بهتر، Turn Amount را بین 30-45 درجه تنظیم کنید.
+:::
+
+## بخش ۳: تله‌پورت به نواحی (Teleportation Areas)
+
+### مفهوم Teleportation Area
+
+نواحی که کاربر می‌تواند به **هر نقطه‌ای** از آن‌ها تله‌پورت کند.
+
+### تنظیم روی فرش
+
+#### مراحل پیکربندی:
+
+1. **انتخاب فرش یا سطح مناسب**
+2. **اضافه کردن Component**:
+   ```
+   GameObject > Add Component > Teleportation Area
+   ```
+
+#### تنظیمات ضروری:
+
+| جزء                   | تنظیم          | مقدار                |
+| --------------------- | -------------- | -------------------- |
+| **Collider**          | isTrigger      | ✅ فعال              |
+| **Layer**             | Teleportation  | مخصوص Ray Interactor |
+| **Match Orientation** | World Space Up | جهت ثابت             |
+
+### Visual Feedback
+
+برای نمایش بهتر منطقه:
+
+- **Material شفاف** با رنگ مشخص
+- **Outline Effect** روی لبه‌ها
+- **Particle Effects** هنگام تله‌پورت
+
+:::info انعطاف‌پذیری
+Teleportation Area برای فضاهای باز و نواحی بزرگ مناسب است.
+:::
+
+## بخش ۴: نقاط ثابت تله‌پورت (Teleportation Anchors)
+
+### مزیت‌های Teleportation Anchor
+
+- **کنترل دقیق موقعیت**
+- **جلوگیری از تله‌پورت نامناسب**
+- **هدایت تجربه کاربر**
+
+### پیاده‌سازی روی پادری‌ها
+
+#### تنظیم Component:
+
+GameObject (Pedestal) > Add Component > Teleportation Anchor
+
+#### پارامترهای کلیدی:
+
+| تنظیم                         | حالت           | کاربرد       |
+| ----------------------------- | -------------- | ------------ |
+| **Teleport Anchor Transform** | دقیق           | موقعیت نهایی |
+| **Match Orientation**         | Target Forward | جهت مشخص     |
+| **Match Directional Input**   | ✅             | کنترل جهت    |
+
+### مقایسه Area vs Anchor
+
+| ویژگی             | Teleportation Area | Teleportation Anchor |
+| ----------------- | ------------------ | -------------------- |
+| **انعطاف موقعیت** | ✅ بالا            | ❌ ثابت              |
+| **کنترل دقیق**    | ❌ محدود           | ✅ کامل              |
+| **کاربرد**        | فضای باز           | نقاط خاص             |
+
+## بخش ۵: سفارشی‌سازی نشانگرها
+
+### انواع Reticle
+
+#### Valid Reticle (نواحی قابل تله‌پورت):
+
+- **رنگ سبز** یا آبی
+- **انیمیشن نبض**
+- **شکل دایره یا فلش**
+
+#### Invalid Reticle (نواحی غیرقابل تله‌پورت):
+
+- **رنگ قرمز**
+- **شکل X یا علامت ممنوع**
+- **انیمیشن لرزش**
+
+### تنظیمات XR Ray Interactor
+
+#### پیکربندی Reticle:
+
+| پارامتر             | توصیف          | مثال                |
+| ------------------- | -------------- | ------------------- |
+| **Valid Reticle**   | Prefab مجاز    | CircleReticle_Green |
+| **Invalid Reticle** | Prefab غیرمجاز | XReticle_Red        |
+| **Reticle Scale**   | اندازه         | 0.1 - 0.3           |
+
+#### تنظیمات Ray:
+
+Line Type: Projectile Curve
+Line Material: TeleportRay_Material  
+Line Width: 0.02
+Sample Frequency: 20
+
+### انیمیشن و جلوه‌های ویژه
+
+#### Particle Systems:
+
+- **Spawn Effect**: هنگام ظاهر شدن ray
+- **Travel Effect**: حین حرکت ray
+- **Impact Effect**: هنگام برخورد با سطح
+
+:::tip بهبود UX
+از انیمیشن‌های ملایم و رنگ‌های متضاد برای Visual Feedback استفاده کنید.
+:::
+
+## بخش ۶: بهینه‌سازی Performance
+
+### تنظیمات Ray Casting
+
+| پارامتر                  | مقدار بهینه        | تأثیر             |
+| ------------------------ | ------------------ | ----------------- |
+| **Max Raycast Distance** | 10-15 متر          | کاهش محاسبات      |
+| **Raycast Mask**         | فقط لایه‌های ضروری | بهبود Performance |
+| **Sample Frequency**     | 15-20              | تعادل کیفیت/سرعت  |
+
+### مدیریت حافظه
+
+- **Object Pooling** برای Reticle ها
+- **LOD System** برای Visual Effects
+- **Culling** اشیاء دور از کاربر
+
+## بخش ۷: رفع مشکلات رایج
+
+### مشکلات Teleportation
+
+| مشکل                       | علت احتمالی    | راه‌حل                       |
+| -------------------------- | -------------- | ---------------------------- |
+| **Ray نمایش داده نمی‌شود** | Layer غلط      | بررسی Interaction Layer Mask |
+| **تله‌پورت کار نمی‌کند**   | Input Action   | بررسی Binding کنترلر         |
+| **Reticle نادرست**         | Prefab نامعتبر | جایگزینی Reticle Asset       |
+
+### تست کیفیت
+
+#### Checklist آزمون:
+
+- ✅ تله‌پورت به تمام نقاط مجاز
+- ✅ عدم تله‌پورت به نقاط نامناسب
+- ✅ Snap Turn در تمام جهات
+- ✅ Visual Feedback واضح
+- ✅ عدم Motion Sickness
+
+:::caution نکات ایمنی
+همیشه Guardian/Chaperone System را فعال نگه دارید تا از برخورد کاربر با اشیاء واقعی جلوگیری شود.
+:::
+
+## جمع‌بندی سیستم
+
+### اجزای پیاده‌سازی شده:
+
+| بخش                       | وضعیت | فایده                |
+| ------------------------- | ----- | -------------------- |
+| **Room Setup**            | ✅    | محیط واقعی‌تر        |
+| **Snap Turning**          | ✅    | کاهش Motion Sickness |
+| **Teleportation Areas**   | ✅    | انعطاف‌پذیری بالا    |
+| **Teleportation Anchors** | ✅    | کنترل دقیق           |
+| **Visual Feedback**       | ✅    | تجربه بهتر           |

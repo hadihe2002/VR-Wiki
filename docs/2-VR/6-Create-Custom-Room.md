@@ -1,61 +1,258 @@
 ---
 sidebar_position: 6
 
-title: ساخت فضای سه بعدی از صفر
+title: ساخت فضای سه‌بعدی از صفر
 ---
 
-# راهنمای ایجاد مدل‌های سه‌بعدی و وارد کردن به Unity
+# راهنمای جامع ایجاد مدل‌های سه‌بعدی و بهینه‌سازی برای Unity
 
-## 1. طراحی مدل با Sweet Home 3D
+## بخش ۱: طراحی مدل با Sweet Home 3D
 
-### شروع کار با Sweet Home 3D
+### نصب و راه‌اندازی
 
-- نرم‌افزار را از Microsoft Store یا وبسایت رسمی دانلود و نصب کنید. این نرم‌افزار رایگان برای طراحی سریع اتاق‌ها و ساختمان‌های ساده بسیار مناسب است. پس از اجرا، یک پروژه جدید ایجاد کنید. در بخش Catalog سمت چپ، انواع دیوارها، درها، پنجره‌ها و مبلمان آماده موجود است. با drag and drop این عناصر را به Plan view اضافه کنید.
-- برای ایجاد اتاق، از Room tool استفاده کرده و کنتور اتاق را رسم کنید. پس از ایجاد ساختار اصلی، می‌توانید texture ها، رنگ‌ها و lighting را تنظیم کنید. در 3D view می‌توانید نتیجه نهایی را مشاهده کنید و با camera controls (scroll، click و drag) زاویه مناسب را انتخاب کنید.
-  ![توضیح تصویر](./img/6-create-custom-room.png)
+#### منابع دانلود
 
-## 2. Export کردن از Sweet Home 3D
+- **Microsoft Store**: دسترسی مستقیم برای Windows
+- **وبسایت رسمی**: [sweethome3d.com](http://www.sweethome3d.com/download.jsp)
 
-### تنظیمات Export برای Unity
+:::tip مزیت Sweet Home 3D
+نرم‌افزار رایگان و مناسب برای طراحی سریع فضاهای معماری ساده است.
+:::
 
-- برای خروجی مناسب Unity، به `3D View > Export to OBJ format` بروید. در پنجره تنظیمات export، Quality را روی High تنظیم کنید و گزینه "Export textures" را حتماً فعال کنید. Width و Height را حداقل 1024 pixel انتخاب کنید تا کیفیت مناسبی داشته باشید. Include Ground را در صورت نیاز فعال کنید و اگر نمی‌خواهید کف اضافی داشته باشید آن را غیرفعال کنید.
-- پس از کلیک روی Export، یک پوشه انتخاب کنید که فایل‌های .obj، .mtl و texture های مربوطه در آن ذخیره شوند. مطمئن شوید که تمام فایل‌ها (شامل textures) در همان پوشه قرار گرفته‌اند زیرا Unity به تمام آن‌ها نیاز دارد.
+### شروع پروژه جدید
 
-## 3. Import کردن به Unity
+#### مراحل اولیه:
+
+1. **ایجاد پروژه جدید**
+2. **آشنایی با رابط کاربری**:
+   - **Catalog** (سمت چپ): عناصر آماده
+   - **Plan View**: نمای دوبعدی طراحی
+   - **3D View**: پیش‌نمایش سه‌بعدی
+
+#### عناصر موجود در Catalog:
+
+| دسته‌بندی           | محتوا              |
+| ------------------- | ------------------ |
+| **Walls**           | انواع دیوار        |
+| **Doors & Windows** | درها و پنجره‌ها    |
+| **Furniture**       | مبلمان و دکوراسیون |
+| **Kitchen**         | تجهیزات آشپزخانه   |
+| **Bathroom**        | تجهیزات حمام       |
+
+### فرایند طراحی
+
+#### ساخت ساختار اصلی:
+
+1. **استفاده از Room Tool** برای ترسیم کنتور اتاق
+2. **Drag & Drop** عناصر از Catalog به Plan View
+3. **تنظیم ابعاد** با استفاده از Property Panel
+
+#### شخصی‌سازی:
+
+- **Texture ها**: اعمال بافت بر روی سطوح
+- **رنگ‌ها**: تنظیم پالت رنگی
+- **نورپردازی**: تنظیم منابع نور
+
+![طراحی در Sweet Home 3D](./img/6-create-custom-room.png)
+
+:::info نکته طراحی
+از 3D View برای بررسی نتیجه نهایی و تنظیم زاویه‌های مناسب استفاده کنید.
+:::
+
+## بخش ۲: Export برای Unity
+
+### تنظیمات Export
+
+**مسیر**: `3D View > Export to OBJ format`
+
+#### پارامترهای مهم:
+
+| تنظیم               | مقدار توصیه‌شده | توضیح              |
+| ------------------- | --------------- | ------------------ |
+| **Quality**         | High            | کیفیت بالای مدل    |
+| **Export textures** | ✅ فعال         | شامل بافت‌ها       |
+| **Width × Height**  | 1024+ px        | رزولوشن مناسب      |
+| **Include Ground**  | اختیاری         | بسته به نیاز پروژه |
+
+### فایل‌های خروجی
+
+پس از Export، فایل‌های زیر تولید می‌شوند:
+
+- **`.obj`**: مدل سه‌بعدی اصلی
+- **`.mtl`**: تعریف مواد و بافت‌ها
+- **Texture files**: فایل‌های تصویری بافت
+
+:::warning نکته مهم
+تمام فایل‌ها را در یک پوشه نگه دارید تا ارجاعات بافت‌ها حفظ شود.
+:::
+
+## بخش ۳: Import به Unity
 
 ### وارد کردن فایل‌های OBJ
 
-- پوشه export شده از Sweet Home 3D را به طور کامل به داخل Assets پروژه Unity کپی کنید. Unity به طور خودکار فایل .obj را تشخیص داده و یک GameObject ایجاد می‌کند. فایل OBJ را در Assets انتخاب کنید و در Inspector، تب Model را باز کنید.گزینه‌ی 1cm به 1m را غیرفعال کنید و Scale Factor را به 0.01 تغییر دهید. Generate Colliders را فعال کنید تا بتوان با مدل تعامل فیزیکی داشت. Read/Write Enabled را فعال کنید زیرا برای ProBuilderize لازم است.
-- پس از اعمال تنظیمات، مدل را از Assets به Hierarchy بکشید. ممکن است ابتدا تکه‌تکه یا کج نمایش داده شود که این مشکل در مرحله بعد حل می‌شود.
+#### مراحل Import:
 
-## 4. استفاده از ProBuilderize برای تصحیح UV Map
+1. **کپی کردن** پوشه Export به داخل Assets
+2. **تشخیص خودکار** فایل .obj توسط Unity
+3. **تنظیم پارامترهای Model**
 
-### نصب و راه‌اندازی ProBuilder
+### پیکربندی Model Settings
 
-- در Package Manager، "[ProBuilder](https://docs.unity3d.com/Packages/com.unity.probuilder@4.0/manual/Object_ProBuilderize.html)" را جستجو کرده و نصب کنید. پس از نصب، `Tools > ProBuilder > ProBuilder Window` را باز کنید تا پنجره **ProBuilder** نمایش داده شود. مدل وارد شده از Sweet Home 3D را در Hierarchy انتخاب کنید. تمام child object های مدل را انتخاب کنید. در ProBuilder Window، دکمه "ProBuilderize" را کلیک کنید. این عمل مدل را به فرمت ProBuilder تبدیل می‌کند و امکان ویرایش UV Maps را فراهم می‌کند **تا Material ها به درستی نمایش داده شوند.** Material ها برای ایجاد جنس و رنگ اشیا در صحنه استفاده می‌شود. در صورت انجام ندادن این تنظیمات Material به درستی نمایش داده نمی‌شود.
-- این مشکل مخصوص به Sweet Home 3D است و ممکن است نرم‌افزار‌های دیگر مثل Revit، Blender و ... این مشکل مربوط به Material را نداشته باشند.
+در **Inspector > Model tab**:
 
-![توضیح تصویر](./img/6-create-custom-room-2.png)
+| پارامتر                | مقدار | دلیل                    |
+| ---------------------- | ----- | ----------------------- |
+| **Scale Factor**       | 0.01  | تبدیل سانتی‌متر به متر  |
+| **Generate Colliders** | ✅    | تعامل فیزیکی            |
+| **Read/Write Enabled** | ✅    | لازم برای ProBuilderize |
 
-## 5. ایجاد Material های Custom
+:::caution مشکل رایج
+مدل ممکن است ابتدا تکه‌تکه یا نادرست نمایش داده شود که در مرحله بعد حل می‌شود.
+:::
 
-### دانلود Texture های با کیفیت
+## بخش ۴: تصحیح UV Map با ProBuilder
 
-- از وبسایت‌های [Polyhaven.com](https://polyhaven.com/)، [AmbientCG.com](https://ambientcg.com/) و [TextureLabs.org](https://texturelabs.org/) texture های رایگان دانلود کنید. برای هر Material معمولاً به چهار نوع texture نیاز دارید: Diffuse/Albedo (رنگ اصلی)، Normal Map (جزئیات سطح)، Roughness (میزان صافی/زبری) و Metallic (خواص فلزی). Resolution مناسب برای VR معمولاً 1024x1024 یا 2048x2048 است.
-- پس از دانلود، تمام texture های مربوط به یک Material را در یک پوشه در Assets قرار دهید. برای تنظیم Texture Type، فایل Normal Map را انتخاب کرده و در Inspector، Texture Type را روی "Normal map" تغییر دهید. سایر texture ها را روی "Default" نگه دارید اما Max Size را برای بهینه‌سازی به 1024 یا 512 کاهش دهید.
+### نصب ProBuilder
 
-### ساخت Material با URP Shader
+**مسیر**: `Package Manager > ProBuilder`
 
-- در Assets کلیک راست کرده و `Create > Material` را انتخاب کنید. Material جدید را انتخاب کنید و در Inspector، Shader را روی "Universal Render Pipeline > Lit" تنظیم کنید. در بخش Surface Inputs، Albedo Map را texture اصلی، Normal Map را normal texture، Metallic Map را texture metallic و Smoothness Map را texture roughness تخصیص دهید.
-- اگر texture جداگانه برای roughness ندارید، می‌توانید مقدار Smoothness را manually تنظیم کنید (0 = خیلی زبر، 1 = خیلی صاف). Tiling و Offset را تنظیم کنید تا texture به اندازه مناسب روی مدل نمایش داده شود. برای پیش‌نمایش نتیجه، Material را به مدل موجود در صحنه drag کنید. اگر Material خیلی روشن یا تیره است، Base Color Tint را تنظیم کنید.
+پس از نصب: `Tools > ProBuilder > ProBuilder Window`
 
-## 6. دانلود مدل‌های سه بعدی آماده از SketchFab
+### فرایند ProBuilderize
 
-### انتخاب و دانلود مدل‌های مناسب
+#### مراحل اجرا:
 
-- به وبسایت [Sketchfab.com](https://sketchfab.com/3d-models) بروید و در بخش Filters، گزینه "Free" را انتخاب کنید تا فقط مدل‌های رایگان نمایش داده شوند. همچنین فیلتر "Downloadable" را فعال کنید. برای پروژه‌های VR، مدل‌هایی با Poly Count پایین (زیر 10K triangles) انتخاب کنید تا Performance خوبی داشته باشید. پس از انتخاب مدل، روی "Download" کلیک کنید و فرمت "Original format" یا "glTF" را انتخاب کنید.
-- برای استفاده از فایل‌های **glTF** در Unity، حتماً [پکیج](https://github.com/atteneder/glTFast) "glTFast" را از Package Manager نصب کنید. فایل دانلود شده را Extract کرده و فولدر حاوی فایل‌های مدل را به Assets پروژه Unity کپی کنید. Unity خودکار مدل را import کرده و در Assets نمایش می‌دهد.
+1. **انتخاب مدل** در Hierarchy
+2. **انتخاب تمام Child Objects**
+3. **کلیک روی "ProBuilderize"** در ProBuilder Window
 
-## 7. استفاده از نرم‌افزارهای پیشرفته (3ds Max / Blender)
+:::info فایده ProBuilderize
+تبدیل مدل به فرمت ProBuilder برای ویرایش UV Maps و نمایش صحیح Material ها.
+:::
 
-- برای طراحی مدل‌های سه بعدی پیچیده‌تر، می‌توانید از Blender، Revit و یا 3ds Max را استفاده کنید.
+![تصحیح UV Map](./img/6-create-custom-room-2.png)
+
+### مشکلات Sweet Home 3D
+
+این تصحیح مخصوص Sweet Home 3D است. نرم‌افزارهای دیگر ممکن است این مشکل را نداشته باشند:
+
+| نرم‌افزار         | وضعیت Material | نیاز به ProBuilderize |
+| ----------------- | -------------- | --------------------- |
+| **Sweet Home 3D** | ❌ مشکل‌دار    | ✅ ضروری              |
+| **Blender**       | ✅ صحیح        | ❌ غیرضروری           |
+| **Revit**         | ✅ صحیح        | ❌ غیرضروری           |
+
+## بخش ۵: ایجاد Material های سفارشی
+
+### منابع Texture
+
+#### پلتفرم‌های توصیه‌شده:
+
+| وبسایت                                          | ویژگی             | کیفیت |
+| ----------------------------------------------- | ----------------- | ----- |
+| **[Polyhaven.com](https://polyhaven.com/)**     | HDR + PBR         | عالی  |
+| **[AmbientCG.com](https://ambientcg.com/)**     | Seamless patterns | عالی  |
+| **[TextureLabs.org](https://texturelabs.org/)** | مجموعه جامع       | خوب   |
+
+### انواع Texture مورد نیاز
+
+برای هر Material معمولاً نیاز به موارد زیر دارید:
+
+| نوع Texture        | نقش             | فرمت توصیه‌شده  |
+| ------------------ | --------------- | --------------- |
+| **Diffuse/Albedo** | رنگ اصلی        | PNG/JPG         |
+| **Normal Map**     | جزئیات سطح      | PNG             |
+| **Roughness**      | میزان زبری/صافی | PNG (Grayscale) |
+| **Metallic**       | خواص فلزی       | PNG (Grayscale) |
+
+### بهینه‌سازی برای VR
+
+:::tip تنظیمات بهینه
+
+- **Resolution**: 1024×1024 یا 2048×2048
+- **Max Size**: 1024 یا 512 برای بهینه‌سازی
+- **Normal Maps**: تنظیم Texture Type روی "Normal map"
+  :::
+
+### ساخت Material با URP
+
+#### مراحل ایجاد:
+
+1. `Assets > Create > Material`
+2. **Shader**: `Universal Render Pipeline > Lit`
+
+#### تنظیمات Surface Inputs:
+
+Albedo Map → Diffuse Texture
+Normal Map → Normal Texture  
+Metallic Map → Metallic Texture
+Smoothness Map → Roughness Texture
+
+#### تنظیمات دستی:
+
+- **Smoothness**: 0 (زبر) تا 1 (صاف)
+- **Tiling & Offset**: تنظیم اندازه تکرار
+- **Base Color Tint**: تصحیح رنگ نهایی
+
+## بخش ۶: دانلود مدل از Sketchfab
+
+### فیلترهای جستجو
+
+**وبسایت**: [sketchfab.com/3d-models](https://sketchfab.com/3d-models)
+
+#### تنظیمات فیلتر:
+
+- ✅ **Free**: مدل‌های رایگان
+- ✅ **Downloadable**: قابل دانلود
+- ✅ **Low Poly**: زیر 10K triangles برای VR
+
+### فرمت‌های پشتیبانی‌شده
+
+| فرمت                | مزیت         | نیاز به پکیج                                       |
+| ------------------- | ------------ | -------------------------------------------------- |
+| **Original format** | کیفیت اصلی   | ❌                                                 |
+| **glTF**            | استاندارد وب | ✅ [glTFast](https://github.com/atteneder/glTFast) |
+| **FBX**             | صنعتی        | ❌                                                 |
+
+### نصب پکیج glTFast
+
+برای پشتیبانی از فایل‌های glTF:
+
+Package Manager > Add package from git URL:
+https://github.com/atteneder/glTFast.git
+
+:::info مزیت glTF
+فرمت مدرن و بهینه برای انتقال مدل‌های سه‌بعدی با پشتیبانی Material کامل.
+:::
+
+## بخش ۷: نرم‌افزارهای پیشرفته
+
+### جایگزین‌های حرفه‌ای
+
+برای پروژه‌های پیچیده‌تر:
+
+| نرم‌افزار    | تخصص           | سطح دشواری |
+| ------------ | -------------- | ---------- |
+| **Blender**  | مدل‌سازی عمومی | متوسط      |
+| **3ds Max**  | معماری/صنعتی   | بالا       |
+| **Revit**    | معماری BIM     | بالا       |
+| **SketchUp** | معماری ساده    | کم         |
+
+### نکات انتقال به Unity
+
+:::caution بهینه‌سازی
+
+- **Poly Count**: کنترل تعداد مثلث‌ها
+- **Texture Resolution**: تنظیم اندازه مناسب
+- **LOD Systems**: استفاده از سطوح جزئیات
+- **Occlusion Culling**: حذف اشیاء غیرقابل مشاهده
+  :::
+
+---
+
+**نسخه مستند**: 2.0  
+**آخرین به‌روزرسانی**: ۱۴۰۴/۰۵/۳۰
+
+:::note به‌روزرسانی آینده
+این راهنما با معرفی ابزارهای جدید مدل‌سازی و بهینه‌سازی‌های Unity به‌روزرسانی خواهد شد.
+:::
